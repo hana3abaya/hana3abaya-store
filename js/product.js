@@ -28,7 +28,7 @@
         "<p>المنتج غير موجود.</p>" +
         '<p><a class="btn btn--soft" href="shop.html">العودة للمتجر</a></p>' +
         "</div>";
-      document.title = "منتج غير موجود | هناء عباية";
+      document.title = "منتج غير موجود | هنا للعبايات وملابس المحجبات";
       return;
     }
 
@@ -40,16 +40,16 @@
     var phone = (window.HANA_CONFIG.whatsapp || "201010000533").replace(/\D/g, "");
     var inquiry = "https://wa.me/" + phone + "?text=" + encodeURIComponent("أريد الاستفسار عن " + name + " (" + p.id + ")");
 
-    document.title = name + " | هناء عباية";
+    document.title = name + " | هنا للعبايات وملابس المحجبات";
     var metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
       metaDesc.setAttribute(
         "content",
-        (desc || name) + (hasPrice ? " — " + Hana.formatPrice(p.price) : "") + " من هناء عباية."
+        (desc || name) + (hasPrice ? " — " + Hana.formatPrice(p.price) : "") + " من هنا للعبايات وملابس المحجبات."
       );
     }
     var ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.setAttribute("content", name + " | هناء عباية");
+    if (ogTitle) ogTitle.setAttribute("content", name + " | هنا للعبايات وملابس المحجبات");
     var canon = document.querySelector('link[rel="canonical"]');
     if (canon) {
       canon.setAttribute(
