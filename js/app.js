@@ -204,7 +204,7 @@
   function buildWhatsAppOrder(customer) {
     var lines = cartLines();
     var parts = [];
-    parts.push("طلب جديد من متجر هناء عباية");
+    parts.push("طلب جديد من متجر هنا للعبايات وملابس المحجبات");
     parts.push("————————");
     for (var i = 0; i < lines.length; i++) {
       var l = lines[i];

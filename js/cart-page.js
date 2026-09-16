@@ -106,7 +106,7 @@
       "</section>" +
       '<section class="checkout-panel" aria-labelledby="checkout-heading">' +
       '<h2 id="checkout-heading">إتمام الطلب</h2>' +
-      '<p class="checkout-note">بعد تأكيد الطلب يُحفظ مباشرة لدى المتجر، وستصلكِ رسالة تأكيد على واتساب من فريق هناء عباية. طريقة الدفع: <strong>الدفع عند الاستلام</strong>. للدعم: <strong data-wa-display>01010000533</strong></p>' +
+      '<p class="checkout-note">بعد تأكيد الطلب يُحفظ مباشرة لدى المتجر، وستصلكِ رسالة تأكيد على واتساب من فريق هنا للعبايات وملابس المحجبات. طريقة الدفع: <strong>الدفع عند الاستلام</strong>. للدعم: <strong data-wa-display>01010000533</strong></p>' +
       '<form class="form-grid" id="checkout-form" novalidate>' +
       '<div class="field"><label for="name">الاسم الكامل *</label>' +
       '<input id="name" name="name" required autocomplete="name" placeholder="اسمك الثلاثي"></div>' +
