@@ -109,7 +109,7 @@
       '<div class="product-actions">' +
       '<button type="button" class="btn" id="add-btn">أضف إلى السلة</button>' +
       '<a class="btn btn--soft" href="cart.html">عرض السلة</a>' +
-      "</div>" : '<div class="product-actions"><a class="btn" href="' + inquiry + '" target="_blank" rel="noopener">استفسار عبر واتساب</a></div>') +
+      "</div>" : '<div class="product-actions"><a class="btn btn--inquiry" href="' + inquiry + '" target="_blank" rel="noopener">استفسار عبر واتساب</a></div>') +
       "</div></article>";
 
     Hana.bindProductImages(root);

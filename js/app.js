@@ -287,7 +287,7 @@
       p.id +
       '" aria-label="أضف ' +
       escapeHtml(name) +
-      ' إلى السلة">أضف للسلة</button>' : '<a class="btn btn--soft btn--sm" href="' + inquiry + '" target="_blank" rel="noopener">استفسار واتساب</a>') +
+      ' إلى السلة">أضف للسلة</button>' : '<a class="btn btn--soft btn--sm btn--inquiry" href="' + inquiry + '" target="_blank" rel="noopener">استفسار واتساب</a>') +
       "</div></article>"
     );
   }
