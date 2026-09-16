@@ -27,12 +27,32 @@
 
   function fillCategories() {
     var sel = document.getElementById("category");
-    Hana.categories().forEach(function (c) {
+    var tabs = document.getElementById("category-tabs");
+    var categories = Hana.categories();
+    categories.forEach(function (c) {
       var opt = document.createElement("option");
       opt.value = c;
       opt.textContent = c;
       sel.appendChild(opt);
     });
+    if (tabs) {
+      var labels = [{ value: "all", label: "كل القطع" }].concat(
+        categories.map(function (c) { return { value: c, label: c }; })
+      );
+      tabs.innerHTML = labels.map(function (item, index) {
+        return '<button type="button" class="category-tab' + (index === 0 ? ' is-active' : '') +
+          '" data-category="' + Hana.escapeHtml(item.value) + '">' +
+          Hana.escapeHtml(item.label) + '</button>';
+      }).join("");
+    }
+  }
+
+  function syncTabs() {
+    var value = document.getElementById("category").value;
+    var tabs = document.querySelectorAll("[data-category]");
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].classList.toggle("is-active", tabs[i].getAttribute("data-category") === value);
+    }
   }
 
   function applyUrlParams() {
@@ -52,12 +72,23 @@
     fillCategories();
     applyUrlParams();
     var form = document.getElementById("shop-filters");
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("input", function () { syncTabs(); render(); });
+    form.addEventListener("change", function () { syncTabs(); render(); });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       render();
     });
+    var tabs = document.getElementById("category-tabs");
+    if (tabs) {
+      tabs.addEventListener("click", function (e) {
+        var button = e.target.closest("[data-category]");
+        if (!button) return;
+        document.getElementById("category").value = button.getAttribute("data-category");
+        syncTabs();
+        render();
+      });
+    }
+    syncTabs();
     render();
   });
 })();
