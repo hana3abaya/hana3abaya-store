@@ -20,7 +20,9 @@
   <a class="skip-link" href="#main">تخطي إلى المحتوى</a>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="logo" href="index.html" data-nav>هناء عباية <span>Hana 3abaya</span></a>
+      <a class="brand-logo" href="index.html" data-nav aria-label="هناء عباية - الرئيسية">
+        <img src="images/hana-logo-white.png" alt="هناء للعبايات وملابس المحجبات" width="230" height="92">
+      </a>
       <nav class="nav" aria-label="القائمة الرئيسية">
         <a href="index.html" data-nav>الرئيسية</a>
         <a href="shop.html" data-nav>المتجر</a>
@@ -33,16 +35,18 @@
   </header>
 
   <main id="main">
-    <div class="container page-banner">
-      <nav class="breadcrumb" aria-label="مسار التنقل">
-        <a href="index.html">الرئيسية</a> · المتجر
-      </nav>
-      <h1>المتجر</h1>
-      <p>جميع القطع المتوفرة حالياً</p>
+    <div class="container store-intro">
+      <div>
+        <span class="eyebrow">HANA 3ABAYA</span>
+        <h1>اختاري قطعتك</h1>
+        <p>كل الموديلات أمامك مباشرة — ابحثي وصفّي النتائج ثم أضيفي للسلة.</p>
+      </div>
+      <a class="whatsapp-quick" href="https://wa.me/201010000533" data-wa-link rel="noopener">اسألي على واتساب</a>
     </div>
 
     <section class="section" style="padding-top:0.5rem">
       <div class="container">
+        <div class="category-tabs" id="category-tabs" aria-label="تصفية حسب الفئة"></div>
         <form class="filters" id="shop-filters" role="search" aria-label="تصفية المنتجات">
           <div class="field">
             <label for="q">بحث</label>

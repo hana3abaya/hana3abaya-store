@@ -20,7 +20,9 @@
   <a class="skip-link" href="#main">تخطي إلى المحتوى</a>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="logo" href="index.html" data-nav>هناء عباية <span>Hana 3abaya</span></a>
+      <a class="brand-logo" href="index.html" data-nav aria-label="هناء عباية - الرئيسية">
+        <img src="images/hana-logo-white.png" alt="هناء للعبايات وملابس المحجبات" width="230" height="92">
+      </a>
       <nav class="nav" aria-label="القائمة الرئيسية">
         <a href="index.html" data-nav>الرئيسية</a>
         <a href="shop.html" data-nav>المتجر</a>
@@ -33,29 +35,42 @@
   </header>
 
   <main id="main">
-    <section class="hero">
-      <div class="container">
-        <div class="hero-card">
-          <h1>أناقة محتشمة بتفاصيل ناعمة</h1>
-          <p>اكتشفي مجموعة هناء عباية من العبايات والفساتين والأطقم. طلب سهل عبر واتساب والدفع عند الاستلام.</p>
-          <div class="hero-actions">
-            <a class="btn" href="shop.html">تسوّقي الآن</a>
-            <a class="btn btn--ghost" href="https://wa.me/201010000533" data-wa-link rel="noopener">واتساب <span data-wa-display>01010000533</span></a>
-          </div>
-        </div>
+    <div class="container store-intro store-intro--home">
+      <div>
+        <span class="eyebrow">NEW COLLECTION</span>
+        <h1>أناقتك تبدأ من هنا</h1>
+        <p>عبايات وفساتين وملابس محجبات مختارة — تصفحي القطع واطلبي بسهولة.</p>
       </div>
-    </section>
+      <a class="whatsapp-quick" href="https://wa.me/201010000533" data-wa-link rel="noopener">اسألي على واتساب</a>
+    </div>
 
-    <section class="section" aria-labelledby="featured-heading">
+    <section class="section store-section" aria-labelledby="shop-heading">
       <div class="container">
-        <div class="section-head">
-          <div>
-            <h2 id="featured-heading">مختارات من المجموعة</h2>
-            <p>عيّنة من أحدث القطع المتوفرة</p>
+        <h2 class="visually-hidden" id="shop-heading">تسوقي المجموعة</h2>
+        <div class="category-tabs" id="category-tabs" aria-label="تصفية حسب الفئة"></div>
+        <form class="filters" id="shop-filters" role="search" aria-label="تصفية المنتجات">
+          <div class="field">
+            <label for="q">بحث</label>
+            <input type="search" id="q" name="q" placeholder="اسم، وصف، أو رقم المنتج…" autocomplete="off">
           </div>
-          <a class="btn btn--soft btn--sm" href="shop.html">عرض الكل</a>
-        </div>
-        <div class="product-grid" id="home-grid"></div>
+          <div class="field">
+            <label for="category">الفئة</label>
+            <select id="category" name="category">
+              <option value="all">كل القطع</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sort">الترتيب</label>
+            <select id="sort" name="sort">
+              <option value="default">الأحدث</option>
+              <option value="price-asc">السعر: من الأقل للأعلى</option>
+              <option value="price-desc">السعر: من الأعلى للأقل</option>
+            </select>
+          </div>
+        </form>
+        <p class="results-meta" id="results-meta" aria-live="polite"></p>
+        <div class="product-grid" id="shop-grid"></div>
+        <div class="empty-state" id="shop-empty" hidden>لا توجد نتائج مطابقة. جرّبي تعديل البحث أو الفئة.</div>
       </div>
     </section>
 
@@ -103,13 +118,6 @@
   <script src="js/config.js"></script>
   <script src="js/products-data.js"></script>
   <script src="js/app.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var grid = document.getElementById("home-grid");
-      var list = Hana.getProducts().slice(0, 8);
-      grid.innerHTML = list.map(Hana.productCardHtml).join("");
-      Hana.bindProductImages(grid);
-    });
-  </script>
+  <script src="js/shop.js"></script>
 </body>
 </html>
