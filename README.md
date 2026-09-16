@@ -11,10 +11,8 @@
 ### ماذا يتضمن الموقع؟
 - الصفحة الرئيسية، المتجر (بحث / فئة / ترتيب بالسعر)، صفحة منتج (`product.html?id=HN-XXX`)، السلة وإتمام الطلب.
 - سلة محفوظة في `localStorage`.
-- تأكيد الطلب يحفظ الأوردر في خادم Cloudflare (D1) مع صور المنتجات، ثم صفحة شكر برقم الطلب (مثل HNA-14001).
-- المتجر يتواصل عبر واتساب لتأكيد الأوردر (رسائل جاهزة للنسخ من لوحة الإدارة). واتساب في التذييل للدعم فقط.
+- إرسال الطلب عبر واتساب مع رسالة عربية جاهزة (المنتجات، الكميات، الأسعار، المجموع، بيانات العميل، **الدفع عند الاستلام**).
 - رقم العرض: **01010000533** — رابط واتساب: `https://wa.me/201010000533`
-- لوحة إدارة عربية: بعد نشر الـ Worker على `/admin/` — انظر [`cloudflare/README-CLOUDFLARE.md`](cloudflare/README-CLOUDFLARE.md).
 - صور من المسار `images/products/HN-XXX.jpg` مع بديل تلقائي إن لم توجد الصورة.
 
 ### تعديل المنتجات
@@ -35,7 +33,7 @@ print('OK', len(data['products']), 'products')
 ```
 
 - الاسم الفارغ يظهر كـ: **منتج HN-0XX**.
-- عدّلي رقم واتساب ورابط API الطلبات في `js/config.js` عند الحاجة (`whatsapp`، `whatsappDisplay`، `ordersApiBase`).
+- عدّلي رقم واتساب في `js/config.js` عند الحاجة (`whatsapp` و `whatsappDisplay`).
 
 ### إضافة الصور
 ضعي الملفات في:
@@ -60,15 +58,6 @@ python3 -m http.server 8080
 
 أو افتحي `index.html` مباشرة في المتصفح — البيانات محمّلة عبر `js/products-data.js` لتعمل بدون خادم.
 
-
-### خادم الطلبات (Cloudflare Worker) — بدون DNS
-1. اتبعي الخطوات في [`cloudflare/README-CLOUDFLARE.md`](cloudflare/README-CLOUDFLARE.md).
-2. انشري على رابط **`*.workers.dev` فقط** — **لا تغيّري DNS** لـ `hana3abaya.com`.
-3. المتجر الحي يبقى على GitHub Pages: `https://hana3abaya.github.io/hana3abaya-store/`
-4. بعد `wrangler deploy`، ضعي رابط الـ Worker في `js/config.js` → `ordersApiBase`.
-5. لوحة الإدارة: `https://<worker>.workers.dev/admin/`
-6. ربط الدومين المخصص **خطوة لاحقة اختيارية** وليست مطلوبة لعمل الطلبات.
-
 ### النشر على Cloudflare Pages
 1. ارفعي هذا المجلد إلى مستودع GitHub `hana3abaya/hana3abaya-store`.
 2. في Cloudflare Pages: Create project → Connect to Git → اختاري المستودع.
@@ -82,7 +71,7 @@ python3 -m http.server 8080
 
 ## English (short)
 
-Static Arabic RTL storefront for **Hana 3abaya** (vanilla HTML/CSS/JS). Product data from `data/products.json` (26 SKUs). Cart in `localStorage`; checkout POSTs orders to a Cloudflare Worker/D1 backend (see `cloudflare/`), then shows `thank-you.html`. Put photos at `images/products/HN-XXX.jpg`. Set `ordersApiBase` and WhatsApp in `js/config.js`. Deploy storefront as static (Pages/GitHub Pages); deploy Worker separately.
+Static Arabic RTL storefront for **Hana 3abaya** (vanilla HTML/CSS/JS). Product data from `data/products.json` (26 SKUs). Cart in `localStorage`; checkout opens WhatsApp COD message. Put photos at `images/products/HN-XXX.jpg`. Edit WhatsApp in `js/config.js`. Deploy as a static site on Cloudflare Pages (no build step). After editing JSON, regenerate `js/products-data.js` with the Python snippet above.
 
 ---
 
@@ -94,7 +83,6 @@ hana3abaya-store/
   shop.html
   product.html
   cart.html
-  thank-you.html
   robots.txt
   sitemap.xml
   README.md
@@ -108,10 +96,4 @@ hana3abaya-store/
   data/products.json
   images/favicon.svg
   images/products/
-  cloudflare/                 # Worker + D1 + admin
-    wrangler.toml
-    schema.sql
-    README-CLOUDFLARE.md
-    src/index.js
-    admin/
 ```
