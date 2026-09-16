@@ -1,7 +1,7 @@
 /* إعدادات المتجر — عدّلي الرقم هنا عند الحاجة */
 window.HANA_CONFIG = {
   brand: "Hana 3abaya",
-  brandAr: "هنا للعبايات وملابس المحجبات",
+  brandAr: "هنا عباية",
   domain: "hana3abaya.com",
   whatsapp: "201010000533",
   whatsappDisplay: "01010000533",
