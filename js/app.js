@@ -4,6 +4,25 @@
 
   var CFG = window.HANA_CONFIG || {};
   var DATA = window.HANA_DATA || { products: [] };
+  var CURATED_ORDER = [
+    "HN-048", "HN-047", "HN-046", "HN-045",
+    "HN-044", "HN-043", "HN-042", "HN-041",
+    "HN-040", "HN-039", "HN-038", "HN-037",
+    "HN-036", "HN-035", "HN-034", "HN-033",
+    "HN-032", "HN-031", "HN-030", "HN-029",
+    "HN-028", "HN-027",
+    "HN-025", "HN-024", "HN-011", "HN-013",
+    "HN-018", "HN-005", "HN-006", "HN-020",
+    "HN-010", "HN-021", "HN-003", "HN-004",
+    "HN-009", "HN-012", "HN-019", "HN-001",
+    "HN-014", "HN-017", "HN-016", "HN-015",
+    "HN-008", "HN-007", "HN-002", "HN-022",
+    "HN-023", "HN-026"
+  ];
+  var ORDER_INDEX = CURATED_ORDER.reduce(function (map, id, index) {
+    map[id] = index;
+    return map;
+  }, {});
 
   function productName(p) {
     var n = (p && p.name || "").trim();
@@ -222,8 +241,11 @@
   function productCardHtml(p) {
     var name = productName(p);
     var href = "product.html?id=" + encodeURIComponent(p.id);
-    var hasCompare = p.compare_at && p.compare_at > p.price;
+    var hasPrice = p.price != null && !isNaN(p.price);
+    var hasCompare = hasPrice && p.compare_at && p.compare_at > p.price;
     var img = imagePath(p.id);
+    var phone = (CFG.whatsapp || "201010000533").replace(/\D/g, "");
+    var inquiry = "https://wa.me/" + phone + "?text=" + encodeURIComponent("أريد الاستفسار عن " + name + " (" + p.id + ")");
     return (
       '<article class="product-card" data-id="' +
       p.id +
@@ -253,19 +275,19 @@
       '<p class="product-card__sku">' +
       escapeHtml(p.id) +
       "</p>" +
-      '<div class="product-card__price">' +
+      (hasPrice ? '<div class="product-card__price">' +
       '<span class="price">' +
       formatPrice(p.price) +
       "</span>" +
       (hasCompare
         ? '<span class="price price--was">' + formatPrice(p.compare_at) + "</span>"
         : "") +
-      "</div>" +
-      '<button type="button" class="btn btn--soft btn--sm" data-add="' +
+      "</div>" : "") +
+      (hasPrice ? '<button type="button" class="btn btn--soft btn--sm" data-add="' +
       p.id +
       '" aria-label="أضف ' +
       escapeHtml(name) +
-      ' إلى السلة">أضف للسلة</button>' +
+      ' إلى السلة">أضف للسلة</button>' : '<a class="btn btn--soft btn--sm" href="' + inquiry + '" target="_blank" rel="noopener">استفسار واتساب</a>') +
       "</div></article>"
     );
   }
@@ -340,7 +362,9 @@
       });
     } else {
       list.sort(function (a, b) {
-        return String(a.id).localeCompare(String(b.id));
+        var ai = Object.prototype.hasOwnProperty.call(ORDER_INDEX, a.id) ? ORDER_INDEX[a.id] : 9999;
+        var bi = Object.prototype.hasOwnProperty.call(ORDER_INDEX, b.id) ? ORDER_INDEX[b.id] : 9999;
+        return ai - bi || String(a.id).localeCompare(String(b.id));
       });
     }
     return list;

@@ -33,16 +33,19 @@
     }
 
     var name = Hana.productName(p);
-    var hasCompare = p.compare_at && p.compare_at > p.price;
+    var hasPrice = p.price != null && !isNaN(p.price);
+    var hasCompare = hasPrice && p.compare_at && p.compare_at > p.price;
     var desc = (p.description || "").trim();
     var img = Hana.imagePath(p.id);
+    var phone = (window.HANA_CONFIG.whatsapp || "201010000533").replace(/\D/g, "");
+    var inquiry = "https://wa.me/" + phone + "?text=" + encodeURIComponent("أريد الاستفسار عن " + name + " (" + p.id + ")");
 
     document.title = name + " | هناء عباية";
     var metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
       metaDesc.setAttribute(
         "content",
-        (desc || name) + " — " + Hana.formatPrice(p.price) + " من هناء عباية."
+        (desc || name) + (hasPrice ? " — " + Hana.formatPrice(p.price) : "") + " من هناء عباية."
       );
     }
     var ogTitle = document.querySelector('meta[property="og:title"]');
@@ -79,14 +82,14 @@
       (p.category ? " · " + Hana.escapeHtml(p.category) : "") +
       (p.availability ? " · " + Hana.escapeHtml(p.availability) : "") +
       "</p>" +
-      '<div class="product-price-row">' +
+      (hasPrice ? '<div class="product-price-row">' +
       '<span class="price">' +
       Hana.formatPrice(p.price) +
       "</span>" +
       (hasCompare
         ? '<span class="price price--was">' + Hana.formatPrice(p.compare_at) + "</span>"
         : "") +
-      "</div>" +
+      "</div>" : "") +
       (desc
         ? '<p class="product-desc">' + Hana.escapeHtml(desc) + "</p>"
         : "") +
@@ -96,7 +99,7 @@
       specRow("الخامة", p.material) +
       specRow("العناية", p.care) +
       "</ul>" +
-      '<div class="qty-row">' +
+      (hasPrice ? '<div class="qty-row">' +
       '<label for="qty">الكمية</label>' +
       '<div class="qty-control">' +
       '<button type="button" id="qty-minus" aria-label="تقليل الكمية">−</button>' +
@@ -106,10 +109,12 @@
       '<div class="product-actions">' +
       '<button type="button" class="btn" id="add-btn">أضف إلى السلة</button>' +
       '<a class="btn btn--soft" href="cart.html">عرض السلة</a>' +
-      "</div>" +
+      "</div>" : '<div class="product-actions"><a class="btn" href="' + inquiry + '" target="_blank" rel="noopener">استفسار عبر واتساب</a></div>') +
       "</div></article>";
 
     Hana.bindProductImages(root);
+
+    if (!hasPrice) return;
 
     var qtyInput = document.getElementById("qty");
     document.getElementById("qty-minus").addEventListener("click", function () {
