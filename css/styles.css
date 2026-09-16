@@ -992,3 +992,93 @@ textarea {
     display: none;
   }
 }
+
+
+/* Checkout error */
+.checkout-error {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: #f8eae6;
+  color: var(--danger);
+  border: 1px solid #e7cfc7;
+  font-size: 0.95rem;
+}
+
+/* Thank-you page */
+.thankyou {
+  padding: 2.5rem 1rem 3.5rem;
+  display: flex;
+  justify-content: center;
+}
+.thankyou-card {
+  width: min(560px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: var(--shadow);
+  padding: 2rem 1.5rem 1.75rem;
+  text-align: center;
+}
+.thankyou-kicker {
+  margin: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.thankyou-card h1 {
+  margin: 0.5rem 0 0.75rem;
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 700;
+}
+.thankyou-lead {
+  margin: 0 auto 1.25rem;
+  color: var(--ink-soft);
+  max-width: 36ch;
+}
+.thankyou-order {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.4rem;
+  margin-bottom: 1.25rem;
+  min-width: 200px;
+}
+.thankyou-order__label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.thankyou-order__num {
+  font-size: 1.45rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+.thankyou-points {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.thankyou-points li {
+  padding: 0.35rem 0;
+}
+.thankyou-points li::before {
+  content: "✓ ";
+  color: var(--accent);
+}
+.thankyou-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+.thankyou-support {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
