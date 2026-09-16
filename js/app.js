@@ -283,7 +283,7 @@
         ? '<span class="price price--was">' + formatPrice(p.compare_at) + "</span>"
         : "") +
       "</div>" : "") +
-      (hasPrice ? '<button type="button" class="btn btn--soft btn--sm" data-add="' +
+      (hasPrice ? '<button type="button" class="btn btn--soft btn--sm btn--inquiry" data-add="' +
       p.id +
       '" aria-label="أضف ' +
       escapeHtml(name) +
