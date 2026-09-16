@@ -3,14 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>السلة والدفع | هناء عباية</title>
-  <meta name="description" content="راجعي سلة مشترياتك وأكّدي الطلب — الدفع عند الاستلام.">
+  <title>شكراً لطلبكِ | هناء عباية</title>
+  <meta name="description" content="تم استلام طلبكِ بنجاح — هناء عباية.">
   <meta name="robots" content="noindex,follow">
-  <link rel="canonical" href="https://hana3abaya.com/cart.html">
+  <link rel="canonical" href="https://hana3abaya.com/thank-you.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ar_EG">
-  <meta property="og:title" content="السلة والدفع | هناء عباية">
-  <meta property="og:description" content="إتمام الطلب والدفع عند الاستلام.">
+  <meta property="og:title" content="شكراً لطلبكِ | هناء عباية">
   <meta property="og:site_name" content="Hana 3abaya">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/styles.css">
@@ -34,15 +33,28 @@
   </header>
 
   <main id="main">
-    <div class="container page-banner">
-      <nav class="breadcrumb" aria-label="مسار التنقل">
-        <a href="index.html">الرئيسية</a> · السلة
-      </nav>
-      <h1 class="visually-hidden">السلة وإتمام الطلب</h1>
-    </div>
-
-    <div class="container cart-layout" id="cart-layout">
-      <!-- filled by cart.js -->
+    <div class="container thankyou">
+      <div class="thankyou-card">
+        <p class="thankyou-kicker">هناء عباية</p>
+        <h1>شكراً لطلبكِ 🤍</h1>
+        <p class="thankyou-lead">تم استلام الأوردر بنجاح وسيتم التواصل معكِ عبر واتساب لتأكيد التفاصيل.</p>
+        <div class="thankyou-order" id="order-box" hidden>
+          <span class="thankyou-order__label">رقم الطلب</span>
+          <strong class="thankyou-order__num" id="order-number">—</strong>
+        </div>
+        <ul class="thankyou-points">
+          <li>الدفع عند الاستلام (COD)</li>
+          <li>معاينة مع المندوب قبل الاستلام</li>
+          <li>الأوردر غير قابل للتجزئة</li>
+        </ul>
+        <div class="thankyou-actions">
+          <a class="btn" href="shop.html">متابعة التسوق</a>
+          <a class="btn btn--ghost" href="index.html">الرئيسية</a>
+        </div>
+        <p class="thankyou-support">للاستفسار:
+          <a href="https://wa.me/201010000533" data-wa-link>واتساب <span data-wa-display>01010000533</span></a>
+        </p>
+      </div>
     </div>
   </main>
 
@@ -72,6 +84,17 @@
   <script src="js/config.js"></script>
   <script src="js/products-data.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/cart-page.js"></script>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var order = (params.get("order") || "").trim();
+      var box = document.getElementById("order-box");
+      var num = document.getElementById("order-number");
+      if (order) {
+        num.textContent = order;
+        box.hidden = false;
+      }
+    })();
+  </script>
 </body>
 </html>
