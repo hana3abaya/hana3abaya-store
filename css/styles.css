@@ -933,27 +933,10 @@ textarea {
 .product-card .btn {
   border-radius: 10px;
   background: var(--ink);
-  color: #fff;
 }
 
 .product-card .btn:hover {
   background: var(--accent);
-}
-
-/* استفسار واتساب للقطع بدون سعر — فاتح */
-.product-card a.btn.btn--soft,
-.product-card a.btn--inquiry {
-  background: #eaf8ef;
-  color: #146c3a;
-  border: 1px solid #b7e4c7;
-  font-weight: 700;
-}
-
-.product-card a.btn.btn--soft:hover,
-.product-card a.btn--inquiry:hover {
-  background: #d8f3e3;
-  color: #0f5a30;
-  border-color: #8fd4a8;
 }
 
 @media (max-width: 719px) {
@@ -1016,14 +999,20 @@ textarea {
   }
 }
 
-
+/* استفسار واتساب للقطع بدون سعر — فاتح */
+.product-card a.btn.btn--soft,
+.product-card a.btn--inquiry,
 .product-actions a.btn--inquiry {
   background: #eaf8ef;
   color: #146c3a;
   border: 1px solid #b7e4c7;
   font-weight: 700;
 }
+.product-card a.btn.btn--soft:hover,
+.product-card a.btn--inquiry:hover,
 .product-actions a.btn--inquiry:hover {
   background: #d8f3e3;
   color: #0f5a30;
+  border-color: #8fd4a8;
 }
+
