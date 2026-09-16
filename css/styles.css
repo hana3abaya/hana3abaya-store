@@ -835,16 +835,18 @@ textarea {
   justify-content: center;
   flex: 0 0 auto;
   padding: 0.68rem 1.1rem;
-  border: 1px solid #ded5ce;
+  border: 1px solid #b6e2c6;
   border-radius: 999px;
-  background: #fff;
+  background: #e8f7ee;
+  color: #0f6b38;
   font-weight: 700;
   font-size: 0.9rem;
 }
 
 .whatsapp-quick:hover {
-  border-color: #1fa855;
-  color: #167d40;
+  border-color: #8fd4a8;
+  background: #d4f0df;
+  color: #0b5530;
 }
 
 .store-section,
@@ -933,10 +935,31 @@ textarea {
 .product-card .btn {
   border-radius: 10px;
   background: var(--ink);
+  color: #fff;
 }
 
 .product-card .btn:hover {
   background: var(--accent);
+  color: #fff;
+}
+
+.product-card .btn.btn--inquiry,
+.product-card a.btn--inquiry,
+.product-actions a.btn--inquiry,
+a.btn.btn--inquiry {
+  background: #e8f7ee !important;
+  color: #0f6b38 !important;
+  border: 1px solid #b6e2c6 !important;
+  box-shadow: none;
+}
+
+.product-card .btn.btn--inquiry:hover,
+.product-card a.btn--inquiry:hover,
+.product-actions a.btn--inquiry:hover,
+a.btn.btn--inquiry:hover {
+  background: #d4f0df !important;
+  color: #0b5530 !important;
+  border-color: #8fd4a8 !important;
 }
 
 @media (max-width: 719px) {
@@ -997,22 +1020,5 @@ textarea {
   .logo span {
     display: none;
   }
-}
-
-/* استفسار واتساب للقطع بدون سعر — فاتح */
-.product-card a.btn.btn--soft,
-.product-card a.btn--inquiry,
-.product-actions a.btn--inquiry {
-  background: #eaf8ef;
-  color: #146c3a;
-  border: 1px solid #b7e4c7;
-  font-weight: 700;
-}
-.product-card a.btn.btn--soft:hover,
-.product-card a.btn--inquiry:hover,
-.product-actions a.btn--inquiry:hover {
-  background: #d8f3e3;
-  color: #0f5a30;
-  border-color: #8fd4a8;
 }
 
