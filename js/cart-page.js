@@ -1,6 +1,29 @@
 (function () {
   "use strict";
 
+  function absoluteImageUrl(productId) {
+    var base =
+      (window.HANA_CONFIG && window.HANA_CONFIG.productImageBase) ||
+      "https://hana3abaya.github.io/hana3abaya-store/images/products";
+    return base.replace(/\/$/, "") + "/" + productId + ".jpg";
+  }
+
+  function setSubmitting(btn, on) {
+    if (!btn) return;
+    btn.disabled = !!on;
+    btn.textContent = on ? "جاري تأكيد الطلب…" : "تأكيد الطلب";
+  }
+
+  function showFormError(msg) {
+    var box = document.getElementById("checkout-error");
+    if (!box) {
+      alert(msg);
+      return;
+    }
+    box.textContent = msg;
+    box.hidden = !msg;
+  }
+
   function render() {
     var root = document.getElementById("cart-layout");
     var lines = Hana.cartLines();
@@ -80,10 +103,10 @@
       "<span>" +
       Hana.formatPrice(Hana.cartTotal()) +
       "</span></div>" +
-      '</section>' +
+      "</section>" +
       '<section class="checkout-panel" aria-labelledby="checkout-heading">' +
       '<h2 id="checkout-heading">إتمام الطلب</h2>' +
-      '<p class="checkout-note">بعد تعبئة البيانات سيتم فتح واتساب برسالة طلب جاهزة. طريقة الدفع: <strong>الدفع عند الاستلام</strong>. رقم التواصل: <strong data-wa-display>01010000533</strong></p>' +
+      '<p class="checkout-note">بعد تأكيد الطلب يُحفظ مباشرة لدى المتجر، وستصلكِ رسالة تأكيد على واتساب من فريق هناء عباية. طريقة الدفع: <strong>الدفع عند الاستلام</strong>. للدعم: <strong data-wa-display>01010000533</strong></p>' +
       '<form class="form-grid" id="checkout-form" novalidate>' +
       '<div class="field"><label for="name">الاسم الكامل *</label>' +
       '<input id="name" name="name" required autocomplete="name" placeholder="اسمك الثلاثي"></div>' +
@@ -93,9 +116,10 @@
       '<textarea id="address" name="address" rows="3" required placeholder="المحافظة، المنطقة، الشارع، علامة مميزة"></textarea></div>' +
       '<div class="field"><label for="notes">ملاحظات (اختياري)</label>' +
       '<textarea id="notes" name="notes" rows="2" placeholder="مقاس، لون، أو أي ملاحظة"></textarea></div>' +
+      '<p id="checkout-error" class="checkout-error" hidden role="alert"></p>' +
       '<div class="form-actions">' +
-      '<button type="submit" class="btn btn--block">إرسال الطلب عبر واتساب</button>' +
-      '<p class="wa-hint">سيُفتح تطبيق واتساب مع تفاصيل الطلب والدفع عند الاستلام.</p>' +
+      '<button type="submit" class="btn btn--block" id="checkout-submit">تأكيد الطلب</button>' +
+      '<p class="wa-hint">لن يُفتح واتساب تلقائياً — المتجر يتواصل معكِ لتأكيد الأوردر.</p>' +
       "</div></form></section>";
 
     Hana.bindProductImages(root);
@@ -143,25 +167,81 @@
 
     document.getElementById("checkout-form").addEventListener("submit", function (e) {
       e.preventDefault();
+      showFormError("");
       var name = document.getElementById("name").value.trim();
       var phone = document.getElementById("phone").value.trim();
       var address = document.getElementById("address").value.trim();
       var notes = document.getElementById("notes").value.trim();
       if (!name || !phone || !address) {
-        alert("من فضلك أكملي الاسم والهاتف والعنوان.");
+        showFormError("من فضلك أكملي الاسم والهاتف والعنوان.");
         return;
       }
       if (!Hana.cartLines().length) {
-        alert("السلة فارغة.");
+        showFormError("السلة فارغة.");
         return;
       }
-      var url = Hana.buildWhatsAppOrder({
-        name: name,
-        phone: phone,
-        address: address,
-        notes: notes
-      });
-      window.open(url, "_blank", "noopener");
+
+      var apiBase = (
+        (window.HANA_CONFIG && window.HANA_CONFIG.ordersApiBase) ||
+        ""
+      ).replace(/\/$/, "");
+      var btn = document.getElementById("checkout-submit");
+
+      if (!apiBase) {
+        showFormError(
+          "خادم الطلبات غير مُعد بعد (ordersApiBase فارغ). للتطوير المحلي عيّني رابط الـ Worker في js/config.js. للدعم تواصلي عبر واتساب من تذييل الصفحة."
+        );
+        return;
+      }
+
+      var lines = Hana.cartLines();
+      var payload = {
+        customer: { name: name, phone: phone, address: address, notes: notes },
+        items: lines.map(function (l) {
+          return {
+            id: l.id,
+            name: l.name,
+            qty: l.qty,
+            price: l.price,
+            imageUrl: absoluteImageUrl(l.id),
+          };
+        }),
+        total: Hana.cartTotal(),
+        notes: notes,
+        payment_method: "COD",
+      };
+
+      setSubmitting(btn, true);
+      fetch(apiBase + "/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (res) {
+          return res.json().then(function (data) {
+            return { res: res, data: data };
+          });
+        })
+        .then(function (out) {
+          if (!out.res.ok || !out.data || !out.data.ok || !out.data.orderNumber) {
+            var msg =
+              (out.data && (out.data.message || out.data.error)) ||
+              "تعذّر حفظ الطلب. حاولي مرة أخرى.";
+            if (msg === "rate_limited") msg = "محاولات كثيرة — انتظري دقيقة ثم أعيدي المحاولة.";
+            if (msg === "validation") msg = "تحققي من البيانات والمنتجات ثم أعيدي المحاولة.";
+            throw new Error(msg);
+          }
+          Hana.clearCart();
+          window.location.href =
+            "thank-you.html?order=" + encodeURIComponent(out.data.orderNumber);
+        })
+        .catch(function (err) {
+          setSubmitting(btn, false);
+          showFormError(
+            (err && err.message) ||
+              "حدث خطأ في الاتصال بخادم الطلبات. تحققي من الإنترنت أو تواصلي عبر واتساب للدعم."
+          );
+        });
     });
   }
 

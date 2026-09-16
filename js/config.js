@@ -7,5 +7,9 @@ window.HANA_CONFIG = {
   whatsappDisplay: "01010000533",
   currency: "EGP",
   currencyLabel: "ج.م",
-  cartKey: "hana3abaya_cart"
+  cartKey: "hana3abaya_cart",
+  /* Worker على workers.dev — بدون ربط دومين الـ Worker حاليًا */
+  ordersApiBase: "https://hana3abaya-orders.didi-julio.workers.dev",
+  /* صور المنتجات بعد ربط الدومين بـ GitHub Pages */
+  productImageBase: "https://hana3abaya.com/images/products"
 };
