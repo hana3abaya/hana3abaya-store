@@ -11,5 +11,6 @@ window.HANA_CONFIG = {
   /* Worker على workers.dev — بدون ربط دومين الـ Worker حاليًا */
   ordersApiBase: "https://hana3abaya-orders.didi-julio.workers.dev",
   /* صور المنتجات بعد ربط الدومين بـ GitHub Pages */
-  productImageBase: "https://hana3abaya.com/images/products"
+  productImageBase: "https://hana3abaya.com/images/products",
+  gaMeasurementId: "G-BML531MQHK"
 };
