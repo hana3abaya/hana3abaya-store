@@ -1031,18 +1031,39 @@ a.btn.btn--inquiry:hover {
 
 
 
-/* Promo strip */
+/* Promo strip — scrolling خصومات RTL */
 .promo-banner {
   background: var(--accent);
   color: #fff;
-  text-align: center;
+  overflow: hidden;
   font-weight: 800;
-  font-size: clamp(0.92rem, 2.4vw, 1.05rem);
-  letter-spacing: 0.08em;
-  padding: 0.55rem 1rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  letter-spacing: 0.14em;
+  padding: 0.58rem 0;
   line-height: 1.4;
+  white-space: nowrap;
+  direction: ltr; /* keep animation math stable */
 }
-.promo-banner__inner {
-  width: min(100% - 2rem, var(--max));
-  margin-inline: auto;
+.promo-banner__track {
+  display: flex;
+  width: max-content;
+  gap: 2.75rem;
+  animation: promo-marquee 28s linear infinite;
+  will-change: transform;
+}
+.promo-banner__track span {
+  flex: 0 0 auto;
+  direction: rtl;
+}
+@keyframes promo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); } /* right → left */
+}
+@media (prefers-reduced-motion: reduce) {
+  .promo-banner__track {
+    animation: none;
+    transform: none;
+    justify-content: center;
+    width: 100%;
+  }
 }
