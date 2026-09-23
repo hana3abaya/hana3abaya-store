@@ -932,15 +932,22 @@ textarea {
   overflow: hidden;
 }
 
-.product-card .btn {
+.product-card .btn,
+.product-card .btn.btn--soft {
   border-radius: 10px;
-  background: var(--ink);
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.product-card .btn:hover,
+.product-card .btn.btn--soft:hover {
+  background: var(--accent-hover);
   color: #fff;
 }
 
-.product-card .btn:hover {
-  background: var(--accent);
-  color: #fff;
+.product-card .btn.is-added {
+  background: #8f1018;
 }
 
 .product-card .btn.btn--inquiry,
@@ -1022,3 +1029,20 @@ a.btn.btn--inquiry:hover {
   }
 }
 
+
+
+/* Promo strip */
+.promo-banner {
+  background: var(--accent);
+  color: #fff;
+  text-align: center;
+  font-weight: 800;
+  font-size: clamp(0.92rem, 2.4vw, 1.05rem);
+  letter-spacing: 0.08em;
+  padding: 0.55rem 1rem;
+  line-height: 1.4;
+}
+.promo-banner__inner {
+  width: min(100% - 2rem, var(--max));
+  margin-inline: auto;
+}
